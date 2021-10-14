@@ -141,6 +141,7 @@ impl ProjectWorkspace {
         config: &CargoConfig,
         progress: &dyn Fn(String),
     ) -> Result<ProjectWorkspace> {
+
         let res = match manifest {
             ProjectManifest::ProjectJson(project_json) => {
                 let file = fs::read_to_string(&project_json).with_context(|| {
@@ -160,6 +161,8 @@ impl ProjectWorkspace {
                     cmd
                 })?;
 
+                println!("Here's the cargo version!");
+                println!("{:?}", cargo_version);
                 let meta = CargoWorkspace::fetch_metadata(&cargo_toml, config, progress)
                     .with_context(|| {
                         format!(
